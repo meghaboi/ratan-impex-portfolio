@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { Menu, X, ArrowUpRight } from 'lucide-react'
+import MagneticLink from './MagneticLink'
 import { contact } from '../data/content'
 
 const links = [
@@ -79,17 +80,19 @@ export default function Navbar() {
           ))}
         </nav>
 
-        <a
-          href={contact.whatsappCall}
-          target="_blank"
-          rel="noreferrer"
-          className={`hidden items-center gap-2 border px-5 py-2.5 label-meta transition-colors md:flex ${
-            scrolled ? 'border-ink/20 text-ink hover:bg-ink hover:text-cream' : 'border-cream/30 text-cream hover:bg-cream hover:text-ink'
-          }`}
-        >
-          Get in Touch
-          <ArrowUpRight size={14} />
-        </a>
+        <MagneticLink className="hidden md:inline-block" strength={8}>
+          <a
+            href={contact.whatsappCall}
+            target="_blank"
+            rel="noreferrer"
+            className={`flex items-center gap-2 border px-5 py-2.5 label-meta transition-colors ${
+              scrolled ? 'border-ink/20 text-ink hover:bg-ink hover:text-cream' : 'border-cream/30 text-cream hover:bg-cream hover:text-ink'
+            }`}
+          >
+            Get in Touch
+            <ArrowUpRight size={14} />
+          </a>
+        </MagneticLink>
 
         <button
           className={`p-2 transition-colors md:hidden ${tone}`}

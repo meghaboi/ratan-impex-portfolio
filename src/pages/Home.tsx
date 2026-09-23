@@ -1,8 +1,9 @@
 import Hero from '../components/Hero'
+import KineticStrip from '../components/KineticStrip'
 import BrandMarquee from '../components/BrandMarquee'
 import About from '../components/About'
-import BrandIndex from '../components/BrandIndex'
-import FeaturedProducts from '../components/FeaturedProducts'
+import BrandWall from '../components/BrandWall'
+import ProductPreview from '../components/ProductPreview'
 import Process from '../components/Process'
 import GlobalReach from '../components/GlobalReach'
 import FAQ from '../components/FAQ'
@@ -12,10 +13,11 @@ export default function Home() {
   return (
     <>
       <Hero />
+      <KineticStrip />
       <BrandMarquee />
       <About />
-      <BrandIndex />
-      <FeaturedProducts />
+      <BrandWall />
+      <ProductPreview />
       <Process />
       <GlobalReach />
       <FAQ />

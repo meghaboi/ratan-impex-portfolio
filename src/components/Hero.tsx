@@ -1,62 +1,84 @@
-import { motion } from 'framer-motion'
+import { useRef } from 'react'
+import { motion, useScroll, useTransform } from 'framer-motion'
 import { ArrowDown, ArrowUpRight, MessageCircle } from 'lucide-react'
-import DriftWall from './DriftWall'
+import { Globe } from './Globe'
 import RevealWords from './RevealWords'
-import { allProductPhotos, company, brands, stats, contact } from '../data/content'
+import MagneticLink from './MagneticLink'
+import { company, brands, stats, contact } from '../data/content'
+import { globeMarkers, globeArcs } from '../data/geo'
 
 const productsStat = stats.find((s) => s.label === 'Products')!
 
 export default function Hero() {
-  return (
-    <section className="relative h-[100dvh] min-h-[720px] overflow-hidden bg-ink text-cream">
-      {/* Product imagery bleeds off the right edge — a tilted column, not a boxed panel */}
-      <div className="absolute inset-y-0 right-0 w-[46%] opacity-70 sm:w-[38%] lg:w-[32%]">
-        <DriftWall
-          items={allProductPhotos}
-          columns={3}
-          tileWidth={220}
-          tileHeight={150}
-          gap={14}
-          speed={16}
-          tilt={14}
-          turn={-10}
-          depth={90}
-          dim={0.5}
-          fade={0.4}
-          lift={40}
-          overlayColor="#1a1530"
-        />
-        <div className="absolute inset-y-0 left-0 w-1/2 bg-gradient-to-r from-ink to-transparent" />
-      </div>
+  const sectionRef = useRef<HTMLElement>(null)
+  const { scrollYProgress } = useScroll({ target: sectionRef, offset: ['start start', 'end start'] })
+  const textY = useTransform(scrollYProgress, [0, 1], ['0%', '-14%'])
+  const textOpacity = useTransform(scrollYProgress, [0, 0.85], [1, 0.15])
+  const globeScale = useTransform(scrollYProgress, [0, 1], [1, 1.08])
 
-      {/* Metadata line */}
+  return (
+    <section ref={sectionRef} className="relative h-[100dvh] min-h-[720px] overflow-hidden bg-ink text-cream">
+      {/* Globe — India at the hub, arcs tracing each source country in. A sphere reads as
+          broken if it's clipped, so unlike the wall this used to be, it stays fully visible
+          rather than bleeding off the edge. */}
       <motion.div
-        initial={{ opacity: 0, y: 12 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.7, delay: 0.15 }}
-        className="absolute left-6 top-24 label-meta text-cream/60 sm:left-10 md:top-28"
+        style={{ scale: globeScale }}
+        className="absolute right-[2%] top-1/2 w-[74vw] max-w-[560px] -translate-y-1/2 sm:w-[54vw] lg:right-[4%] lg:w-[40vw] xl:w-[34vw]"
       >
-        India — Global · Est. {company.founded}
+        <Globe
+          markers={globeMarkers}
+          arcs={globeArcs}
+          dark={1}
+          diffuse={1.3}
+          mapBrightness={4}
+          mapSamples={12000}
+          baseColor={[0.16, 0.13, 0.26]}
+          markerColor={[0.957, 0.702, 0.2]}
+          arcColor={[0.878, 0.557, 0.122]}
+          glowColor={[0.32, 0.26, 0.48]}
+          markerSize={0.05}
+          markerElevation={0.02}
+          arcWidth={1.2}
+          arcHeight={0.32}
+          speed={0.0035}
+          theta={0.3}
+        />
       </motion.div>
 
-      {/* Oversized wordmark, asymmetric */}
-      <div className="absolute left-6 top-36 sm:left-10 md:top-40">
-        <h1 className="font-display text-mega font-extrabold uppercase leading-[0.86] tracking-tight">
-          <RevealWords text="Ratan" whileMount delay={0.25} as="div" />
-          <RevealWords text="Impex" whileMount delay={0.4} as="div" className="ml-[0.5em] text-saffron" />
-        </h1>
-      </div>
+      {/* Text stays inside the centered, capped container every other section uses — this is
+          what keeps IT anchored/gutter-respecting regardless of how wide the gallery bleeds. */}
+      <div className="relative mx-auto h-full max-w-[1600px] px-6 md:px-10">
+        <motion.div style={{ y: textY, opacity: textOpacity }}>
+          {/* Metadata line */}
+          <motion.div
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7, delay: 0.15 }}
+            className="absolute left-6 top-24 label-meta text-cream/60 md:left-10 md:top-28"
+          >
+            India — Global · Est. {company.founded}
+          </motion.div>
 
-      {/* Statement, offset lower-right */}
-      <div className="absolute bottom-40 left-6 max-w-md sm:left-10 md:bottom-44 md:left-[38%] md:max-w-lg">
-        <motion.p
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.7 }}
-          className="font-editorial text-lead italic leading-snug text-cream/90"
-        >
-          {company.positioning}
-        </motion.p>
+          {/* Oversized wordmark, asymmetric */}
+          <div className="absolute left-6 top-36 md:left-10 md:top-40">
+            <h1 className="font-display text-mega font-extrabold uppercase leading-[0.86] tracking-tight">
+              <RevealWords text="Ratan" whileMount delay={0.25} as="div" />
+              <RevealWords text="Impex" whileMount delay={0.4} as="div" className="ml-[0.5em] text-saffron" />
+            </h1>
+          </div>
+
+          {/* Statement, offset lower-right */}
+          <div className="absolute bottom-60 left-6 max-w-md sm:bottom-40 md:bottom-44 md:left-[38%] md:max-w-lg">
+            <motion.p
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.7 }}
+              className="font-editorial text-lead italic leading-snug text-cream/90"
+            >
+              {company.positioning}
+            </motion.p>
+          </div>
+        </motion.div>
       </div>
 
       {/* Scroll cue */}
@@ -75,7 +97,7 @@ export default function Hero() {
         </motion.span>
       </motion.div>
 
-      {/* Bottom strip */}
+      {/* Bottom strip — full-bleed toolbar, deliberately outside the capped container */}
       <div className="absolute inset-x-0 bottom-0 flex flex-col gap-4 border-t border-cream/10 px-6 py-5 sm:flex-row sm:items-center sm:justify-between sm:px-10">
         <div className="label-meta flex flex-wrap gap-x-6 gap-y-1 text-cream/60">
           <span>{brands.length} Brands</span>
@@ -83,20 +105,27 @@ export default function Hero() {
           <span>Nationwide Delivery</span>
         </div>
 
-        <div className="flex flex-wrap items-center gap-x-6 gap-y-2">
-          <a href="#brands" className="group inline-flex items-center gap-1.5 label-meta text-cream">
-            Explore Our Brands
-            <ArrowUpRight size={14} className="transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-          </a>
-          <a
-            href={contact.whatsappCatalogue}
-            target="_blank"
-            rel="noreferrer"
-            className="group inline-flex items-center gap-1.5 border border-cream/25 px-5 py-2.5 label-meta transition-colors hover:bg-cream hover:text-ink"
-          >
-            <MessageCircle size={14} />
-            Get the Catalogue
-          </a>
+        <div className="flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center sm:gap-x-6 sm:gap-y-2">
+          <MagneticLink className="w-full sm:w-auto">
+            <a
+              href="#brands"
+              className="group flex items-center justify-center gap-1.5 border border-cream/25 px-5 py-3 label-meta text-cream transition-colors hover:bg-cream hover:text-ink sm:justify-start sm:border-0 sm:px-0 sm:py-0 sm:hover:bg-transparent sm:hover:text-cream"
+            >
+              Explore Our Brands
+              <ArrowUpRight size={14} className="transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+            </a>
+          </MagneticLink>
+          <MagneticLink className="w-full sm:w-auto">
+            <a
+              href={contact.whatsappCatalogue}
+              target="_blank"
+              rel="noreferrer"
+              className="group flex items-center justify-center gap-1.5 border border-cream/25 px-5 py-3 label-meta transition-colors hover:bg-cream hover:text-ink sm:justify-start sm:py-2.5"
+            >
+              <MessageCircle size={14} />
+              Get the Catalogue
+            </a>
+          </MagneticLink>
         </div>
       </div>
     </section>
