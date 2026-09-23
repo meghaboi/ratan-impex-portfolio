@@ -1,9 +1,10 @@
 import Hero from '../components/Hero'
 import BrandMarquee from '../components/BrandMarquee'
-import Stats from '../components/Stats'
 import About from '../components/About'
-import BrandStack from '../components/BrandStack'
+import BrandIndex from '../components/BrandIndex'
 import FeaturedProducts from '../components/FeaturedProducts'
+import Process from '../components/Process'
+import GlobalReach from '../components/GlobalReach'
 import FAQ from '../components/FAQ'
 import Contact from '../components/Contact'
 
@@ -11,11 +12,12 @@ export default function Home() {
   return (
     <>
       <Hero />
-      <Stats />
       <BrandMarquee />
       <About />
-      <BrandStack />
+      <BrandIndex />
       <FeaturedProducts />
+      <Process />
+      <GlobalReach />
       <FAQ />
       <Contact />
     </>

@@ -1,136 +1,103 @@
-import { lazy, Suspense, useState } from 'react'
 import { motion } from 'framer-motion'
-import { MessageCircle, ArrowRight } from 'lucide-react'
+import { ArrowDown, ArrowUpRight, MessageCircle } from 'lucide-react'
 import DriftWall from './DriftWall'
+import RevealWords from './RevealWords'
 import { allProductPhotos, company, brands, stats, contact } from '../data/content'
-
-// vgpu (WebGPU) pulls in a sizeable bundle for a purely decorative background —
-// split it into its own chunk so it never blocks first paint.
-const ShapeWaves = lazy(() => import('./ShapeWaves'))
 
 const productsStat = stats.find((s) => s.label === 'Products')!
 
 export default function Hero() {
-  const [gpuFailed, setGpuFailed] = useState(false)
-
   return (
-    <section className="relative min-h-[100dvh] overflow-hidden bg-ink py-28 lg:py-0">
-      {/* Ambient shader background — gracefully no-ops if WebGPU isn't available */}
-      {!gpuFailed && (
-        <div className="absolute inset-0">
-          <Suspense fallback={null}>
-            <ShapeWaves
-              color="#4a3f6b"
-              hoverColor="#f4b333"
-              backgroundColor="#1a1530"
-              shapes="mixed"
-              cellSize={12}
-              speed={0.7}
-              glow={0.4}
-              fade={0.35}
-              splashStrength={0.5}
-              onError={() => setGpuFailed(true)}
-            />
-          </Suspense>
-        </div>
-      )}
+    <section className="relative h-[100dvh] min-h-[720px] overflow-hidden bg-ink text-cream">
+      {/* Product imagery bleeds off the right edge — a tilted column, not a boxed panel */}
+      <div className="absolute inset-y-0 right-0 w-[46%] opacity-70 sm:w-[38%] lg:w-[32%]">
+        <DriftWall
+          items={allProductPhotos}
+          columns={3}
+          tileWidth={220}
+          tileHeight={150}
+          gap={14}
+          speed={16}
+          tilt={14}
+          turn={-10}
+          depth={90}
+          dim={0.5}
+          fade={0.4}
+          lift={40}
+          overlayColor="#1a1530"
+        />
+        <div className="absolute inset-y-0 left-0 w-1/2 bg-gradient-to-r from-ink to-transparent" />
+      </div>
 
-      <div className="relative z-10 mx-auto grid h-full max-w-[1600px] items-center gap-14 px-6 lg:grid-cols-[0.82fr_1.18fr] lg:gap-8 lg:px-10 lg:py-20">
-        {/* Text column */}
-        <div className="text-center lg:text-left">
-          <motion.span
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7 }}
-            className="font-mono inline-block rounded-full border border-saffron/40 bg-saffron/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-widest text-saffron backdrop-blur-sm sm:text-sm"
-          >
-            {company.legalName} · Est. {company.founded}
-          </motion.span>
+      {/* Metadata line */}
+      <motion.div
+        initial={{ opacity: 0, y: 12 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.7, delay: 0.15 }}
+        className="absolute left-6 top-24 label-meta text-cream/60 sm:left-10 md:top-28"
+      >
+        India — Global · Est. {company.founded}
+      </motion.div>
 
-          <motion.h1
-            initial={{ opacity: 0, y: 28 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.1 }}
-            className="font-display mt-6 text-5xl font-extrabold leading-[0.98] tracking-tight text-cream text-balance sm:text-6xl lg:text-7xl"
-          >
-            {company.tagline}
-          </motion.h1>
+      {/* Oversized wordmark, asymmetric */}
+      <div className="absolute left-6 top-36 sm:left-10 md:top-40">
+        <h1 className="font-display text-mega font-extrabold uppercase leading-[0.86] tracking-tight">
+          <RevealWords text="Ratan" whileMount delay={0.25} as="div" />
+          <RevealWords text="Impex" whileMount delay={0.4} as="div" className="ml-[0.5em] text-saffron" />
+        </h1>
+      </div>
 
-          <motion.p
-            initial={{ opacity: 0, y: 24 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-            className="mx-auto mt-6 max-w-lg text-base text-cream/65 sm:text-lg lg:mx-0"
-          >
-            {company.description}
-          </motion.p>
-
-          <motion.div
-            initial={{ opacity: 0, y: 24 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.28 }}
-            className="mt-6 flex flex-wrap items-center justify-center gap-x-6 gap-y-2 lg:justify-start"
-          >
-            {[
-              [`${brands.length}`, 'Brands'],
-              [`${productsStat.value}${productsStat.suffix}`, 'Products'],
-              ['Nationwide', 'Delivery'],
-            ].map(([value, label]) => (
-              <div key={label} className="flex items-baseline gap-2">
-                <span className="font-display text-2xl font-bold text-saffron sm:text-3xl">{value}</span>
-                <span className="font-mono text-xs uppercase tracking-widest text-cream/50">{label}</span>
-              </div>
-            ))}
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, y: 24 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.36 }}
-            className="mt-9 flex flex-wrap items-center justify-center gap-4 lg:justify-start"
-          >
-            <a
-              href="#brands"
-              className="inline-flex items-center gap-2 rounded-full bg-saffron px-7 py-3.5 font-semibold text-ink shadow-lg shadow-saffron/20 transition-transform hover:scale-105"
-            >
-              Explore Our Brands
-              <ArrowRight size={18} />
-            </a>
-            <a
-              href={contact.whatsappCatalogue}
-              target="_blank"
-              rel="noreferrer"
-              className="inline-flex items-center gap-2 rounded-full border border-cream/25 bg-white/5 px-7 py-3.5 font-semibold text-cream backdrop-blur-sm transition-transform hover:scale-105 hover:bg-white/10"
-            >
-              <MessageCircle size={18} />
-              Get the Catalogue
-            </a>
-          </motion.div>
-        </div>
-
-        {/* Drift wall panel */}
-        <motion.div
-          initial={{ opacity: 0, scale: 0.96 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.9, delay: 0.15 }}
-          className="relative aspect-[16/12] overflow-hidden rounded-xl border border-white/10 shadow-2xl shadow-black/40 lg:aspect-auto lg:h-[86vh] lg:min-h-[620px]"
+      {/* Statement, offset lower-right */}
+      <div className="absolute bottom-40 left-6 max-w-md sm:left-10 md:bottom-44 md:left-[38%] md:max-w-lg">
+        <motion.p
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.7 }}
+          className="font-editorial text-lead italic leading-snug text-cream/90"
         >
-          <DriftWall
-            items={allProductPhotos}
-            columns={7}
-            tileWidth={180}
-            tileHeight={124}
-            gap={16}
-            speed={26}
-            tilt={16}
-            turn={-14}
-            depth={120}
-            dim={0.55}
-            fade={0.25}
-            lift={50}
-            overlayColor="#1a1530"
-          />
-        </motion.div>
+          {company.positioning}
+        </motion.p>
+      </div>
+
+      {/* Scroll cue */}
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.8, delay: 1 }}
+        className="absolute bottom-24 left-1/2 hidden -translate-x-1/2 flex-col items-center gap-2 text-cream/50 sm:flex"
+      >
+        <span className="label-meta">Scroll</span>
+        <motion.span
+          animate={{ y: [0, 6, 0] }}
+          transition={{ duration: 1.6, repeat: Infinity, ease: 'easeInOut' }}
+        >
+          <ArrowDown size={16} />
+        </motion.span>
+      </motion.div>
+
+      {/* Bottom strip */}
+      <div className="absolute inset-x-0 bottom-0 flex flex-col gap-4 border-t border-cream/10 px-6 py-5 sm:flex-row sm:items-center sm:justify-between sm:px-10">
+        <div className="label-meta flex flex-wrap gap-x-6 gap-y-1 text-cream/60">
+          <span>{brands.length} Brands</span>
+          <span>{productsStat.value}{productsStat.suffix} Products</span>
+          <span>Nationwide Delivery</span>
+        </div>
+
+        <div className="flex flex-wrap items-center gap-x-6 gap-y-2">
+          <a href="#brands" className="group inline-flex items-center gap-1.5 label-meta text-cream">
+            Explore Our Brands
+            <ArrowUpRight size={14} className="transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+          </a>
+          <a
+            href={contact.whatsappCatalogue}
+            target="_blank"
+            rel="noreferrer"
+            className="group inline-flex items-center gap-1.5 border border-cream/25 px-5 py-2.5 label-meta transition-colors hover:bg-cream hover:text-ink"
+          >
+            <MessageCircle size={14} />
+            Get the Catalogue
+          </a>
+        </div>
       </div>
     </section>
   )

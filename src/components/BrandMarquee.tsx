@@ -5,20 +5,20 @@ export default function BrandMarquee() {
   const text = brands.map((b) => b.name).join(' ')
 
   return (
-    <div className="relative overflow-hidden bg-saffron">
+    <div className="relative overflow-hidden border-y border-ink/10 bg-cream">
       <TextLoop
         text={text}
         shape="line"
-        speed={70}
-        separator="✦"
-        fontSize={30}
-        fontWeight={800}
-        letterSpacing={0.5}
-        color="#1a1530"
+        speed={55}
+        separator="/"
+        fontSize={22}
+        fontWeight={600}
+        letterSpacing={1}
+        color="#1a153055"
         ribbon={false}
         pauseOnHover
-        className="font-display"
-        style={{ height: 88 }}
+        className="font-mono"
+        style={{ height: 56 }}
       />
     </div>
   )

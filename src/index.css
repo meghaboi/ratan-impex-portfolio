@@ -2,6 +2,7 @@
 
 @theme {
   --font-display: "Bricolage Grotesque", "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
+  --font-editorial: "Fraunces", "Bricolage Grotesque", ui-serif, serif;
   --font-sans: "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
   --font-mono: "JetBrains Mono", ui-monospace, monospace;
 
@@ -33,6 +34,43 @@ body {
 
 .font-display {
   font-family: var(--font-display);
+}
+
+.font-editorial {
+  font-family: var(--font-editorial);
+  font-feature-settings: "ss01" 1;
+}
+
+/* Fluid editorial type scale: tiny metadata -> massive statement.
+   Used across sections so headline sizing stays a single system rather than ad hoc per component. */
+:root {
+  --step-label: clamp(0.7rem, 0.65rem + 0.2vw, 0.8rem);
+  --step-body: clamp(1rem, 0.95rem + 0.2vw, 1.1875rem);
+  --step-lead: clamp(1.25rem, 1.1rem + 0.6vw, 1.75rem);
+  --step-heading: clamp(2.25rem, 1.6rem + 2.6vw, 4rem);
+  --step-display: clamp(3.25rem, 1.9rem + 5.6vw, 7rem);
+  --step-mega: clamp(4rem, 1.6rem + 9.5vw, 11.5rem);
+}
+
+.text-label { font-size: var(--step-label); }
+.text-body-fluid { font-size: var(--step-body); }
+.text-lead { font-size: var(--step-lead); }
+.text-heading { font-size: var(--step-heading); }
+.text-display { font-size: var(--step-display); }
+.text-mega { font-size: var(--step-mega); }
+
+/* A single hairline-rule vocabulary replaces card shadows/borders-with-radius across the redesign.
+   Width/style only — color always comes from a paired Tailwind border-color utility (e.g. border-ink/10)
+   so the two rules don't fight over the border-*-color longhand. */
+.rule-t { border-top-width: 1px; border-top-style: solid; }
+.rule-b { border-bottom-width: 1px; border-bottom-style: solid; }
+
+.label-meta {
+  font-family: var(--font-mono);
+  font-size: var(--step-label);
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
 }
 
 /* thin brand-colored scrollbar */
