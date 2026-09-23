@@ -1,0 +1,22 @@
+.text-loop {
+  position: relative;
+  width: 100%;
+  height: 100px;
+  line-height: 0;
+}
+
+.text-loop-svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.text-loop-measure {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.text-loop-text {
+  font-family: inherit;
+}
