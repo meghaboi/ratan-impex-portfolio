@@ -42,7 +42,8 @@ export default function BrandPage() {
             className="label-meta"
             style={{ color: brand.color }}
           >
-            {brand.country} · {brand.products.length} Products
+            {brand.country}
+            {brand.products.length > 0 && ` · ${brand.products.length} Products`}
           </motion.span>
 
           <motion.h1

@@ -8,6 +8,7 @@ import Contact from '../components/Contact'
 import { brands, stats } from '../data/content'
 
 const productsStat = stats.find((s) => s.label === 'Products')!
+const brandsStat = stats.find((s) => s.label === 'Brands')!
 
 export default function ProductsPage() {
   return (
@@ -24,7 +25,7 @@ export default function ProductsPage() {
             transition={{ duration: 0.6 }}
             className="label-meta text-saffron"
           >
-            {brands.length} Brands · {productsStat.value}{productsStat.suffix} Products
+            {brandsStat.value}{brandsStat.suffix} Brands · {productsStat.value}{productsStat.suffix} Products
           </motion.span>
 
           <motion.h1

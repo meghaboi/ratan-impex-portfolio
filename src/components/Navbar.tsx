@@ -44,7 +44,8 @@ export default function Navbar() {
     }
   }
 
-  const tone = scrolled || open ? 'text-ink' : 'text-cream'
+  const onDark = open || !scrolled
+  const tone = onDark ? 'text-cream' : 'text-ink'
 
   return (
     <header className="fixed top-0 z-50 w-full">
@@ -55,16 +56,18 @@ export default function Navbar() {
       />
 
       <div
-        className={`relative mx-auto flex max-w-[1600px] items-center justify-between px-6 transition-all duration-500 md:px-10 ${
-          scrolled ? 'py-3' : 'py-5 md:py-7'
+        className={`relative z-10 mx-auto flex max-w-[1600px] items-center justify-between px-6 transition-all duration-500 md:px-10 ${
+          scrolled ? 'py-2' : 'py-4 md:py-5'
         }`}
       >
-        <Link
-          to="/"
-          onClick={() => setOpen(false)}
-          className={`font-display text-lg font-bold tracking-tight sm:text-xl ${tone}`}
-        >
-          RATAN IMPEX
+        <Link to="/" onClick={() => setOpen(false)} aria-label="Ratan Impex — home">
+          <img
+            src="/images/misc/logo.png"
+            alt="Ratan Impex"
+            className={`w-auto transition-all duration-500 ${scrolled ? 'h-11 md:h-12' : 'h-14 md:h-16'} ${
+              onDark ? 'brightness-0 invert' : ''
+            }`}
+          />
         </Link>
 
         <nav className="hidden items-center gap-9 md:flex">

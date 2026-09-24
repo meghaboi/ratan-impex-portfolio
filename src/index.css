@@ -65,6 +65,18 @@ body {
 .rule-t { border-top-width: 1px; border-top-style: solid; }
 .rule-b { border-bottom-width: 1px; border-bottom-style: solid; }
 
+/* Softens all four edges of a tile gallery into the page background instead of clipping them hard. */
+.fade-edges {
+  -webkit-mask-image:
+    linear-gradient(to right, transparent 0%, #000 16%, #000 84%, transparent 100%),
+    linear-gradient(to bottom, transparent 0%, #000 14%, #000 86%, transparent 100%);
+  -webkit-mask-composite: source-in;
+  mask-image:
+    linear-gradient(to right, transparent 0%, #000 16%, #000 84%, transparent 100%),
+    linear-gradient(to bottom, transparent 0%, #000 14%, #000 86%, transparent 100%);
+  mask-composite: intersect;
+}
+
 .label-meta {
   font-family: var(--font-mono);
   font-size: var(--step-label);

@@ -1,14 +1,15 @@
 export const company = {
   name: 'Ratan Impex',
-  legalName: 'Ratan Impex Private Ltd.',
-  tagline: 'A Decade of Passion, Taste & Global Flavours',
-  founded: 2005,
+  legalName: 'Ratan Impex Private Limited',
+  tagline: 'Global Brands. Built for India.',
+  founded: 2009,
   headquarters: 'Hyderabad, Telangana',
+  offices: ['Hyderabad (HQ)', 'Bhiwandi', 'Bengaluru'],
   description:
-    "For over 10 years, we've dedicated ourselves to bringing the world's finest food brands to Indian shelves and homes.",
+    'Our role goes beyond importing products. We build markets, develop brands and create long-term partnerships.',
   intro:
-    "At Ratan Impex, we're not just importers — we're passionate food lovers on a mission.",
-  positioning: "India's leading importer and distributor of premium confectionery brands.",
+    'We connect international food and beverage brands with the Indian market through one integrated platform — import, supply chain, warehousing, distribution, sales, trade marketing, e-commerce and brand building.',
+  positioning: 'An India-based FMCG import, distribution and brand-development company.',
 }
 
 export const countries = ['Poland', 'Malaysia', 'Dubai (UAE)', 'Oman', 'Thailand', 'Ukraine']
@@ -16,18 +17,17 @@ export const countries = ['Poland', 'Malaysia', 'Dubai (UAE)', 'Oman', 'Thailand
 export const mission =
   'We aim to improve the quality of life for our people, customers, and society.'
 export const vision =
-  'To become the leading FMCG Import & Distribution company and the Partner of Choice for employees, brands, and customers.'
+  'To become a leading FMCG Import & Distribution company and the Partner of Choice for employees, brands, and customers.'
 export const values =
   'A culture of active involvement, which provides our people, customers, and society the opportunity to add value to the way we work — built on integrity, transparency, and excellence.'
 
-export const departments = [
-  'Finance',
-  'Sales Department',
+export const capabilities = [
+  'International Import',
+  'Distribution',
+  'Brand Development',
   'Trade Marketing',
-  'E-Commerce',
   'Supply Chain',
-  'Logistics & Warehouse',
-  'IT Department',
+  'E-Commerce',
 ]
 
 export const contact = {
@@ -305,65 +305,51 @@ export const brands: Brand[] = [
     ],
   },
   {
-    slug: 'relish',
-    name: 'Relish',
+    slug: 'koko-kraft',
+    name: 'Koko Kraft',
     logo: null,
-    tagline: 'Wholesome Goodness, Oats Cookies',
-    color: '#A31E22',
-    colorSoft: '#FBE3E0',
-    poster: '/images/gallery/relish-poster.jpg',
+    tagline: 'International FMCG brand',
+    color: '#8A5A2B',
+    colorSoft: '#F6ECDD',
     country: 'Imported',
     overview:
-      'Relish bakes wholesome oats cookies in eight indulgent flavours — from chocolate chip to cashew, pistachio and honey — for a satisfying everyday treat.',
-    products: [
-      { name: 'Chocolate Chip & Oats Cookies', size: '42g × 12 pcs × 12 packs', description: 'Wholesome oats cookies loaded with real chocolate chips.', image: '/images/products/relish-choc-chip-oats.jpg' },
-      { name: 'Cardamom & Oats Cookies', size: '42g × 12 pcs × 12 packs', description: 'Wholesome oats cookies fragrant with warm cardamom.' },
-      { name: 'Butter & Oats Cookies', size: '42g × 12 pcs × 12 packs', description: 'A classic buttery oats cookie, simple and satisfying.' },
-      { name: 'Coconut & Oats Cookies', size: '42g × 12 pcs × 12 packs', description: 'Wholesome oats cookies with fragrant shredded coconut.' },
-      { name: 'Cashew, Pistachio & Oats Cookies', size: '42g × 12 pcs × 12 packs', description: 'A nutty blend of cashew and pistachio baked into wholesome oats.' },
-      { name: 'Ginger, Honey & Oats Cookies', size: '42g × 12 pcs × 12 packs', description: 'Warm ginger and sweet honey baked into a wholesome oats cookie.' },
-      { name: 'Cashew, Almond & Oats Cookies', size: '42g × 12 pcs × 12 packs', description: 'A rich blend of cashew and almond baked into wholesome oats.' },
-      { name: 'Coffee & Oats Cookies', size: '42g × 12 pcs × 12 packs', description: 'A bold coffee flavour baked into a wholesome oats cookie.' },
-    ],
+      'Koko Kraft is part of the Ratan Impex international portfolio. Product range and details are being added.',
+    products: [],
   },
   {
-    slug: 'choco-dunes',
-    name: 'Choco Dunes',
+    slug: 'bika',
+    name: 'Bika',
     logo: null,
-    tagline: 'Arabian Kunafa Chocolate, from Dubai',
-    color: '#7A8A3C',
-    colorSoft: '#EEF2DE',
-    poster: '/images/gallery/choco-dunes-poster.jpg',
-    country: 'Dubai (UAE)',
+    tagline: 'International FMCG brand',
+    color: '#2E6F8E',
+    colorSoft: '#E1F0F6',
+    country: 'Imported',
     overview:
-      'Choco Dunes brings the indulgent taste of Arabian Kunafa chocolate straight from Dubai — pistachio-filled treats, luxury royal-treat bars and chocolate-covered dates.',
-    products: [
-      { name: 'Arabian Kunafa Chocolate — Pistachio', size: '250g × 10 packs', description: 'Crispy Kunafa pastry wrapped in chocolate and finished with pistachio.', image: '/images/products/choco-dunes-pistachio-kunafa.jpg' },
-      { name: 'Luxury Pistachio Royal Treat', size: '250g × 10 packs', description: 'An indulgent pistachio-filled chocolate royal treat.' },
-      { name: 'Luxury Biskoto Royal Treat', size: '250g × 10 packs', description: 'A crisp biscuit-filled chocolate royal treat.' },
-      { name: 'Luxury Almond Royal Treat', size: '250g × 10 packs', description: 'A rich almond-filled chocolate royal treat.' },
-      { name: 'Coconut Chocolate Bar', size: '1 × 5kg', description: 'A generous slab of coconut-filled chocolate for retail slicing.' },
-      { name: 'Nutty Chocolate Bar', size: '1 × 5kg', description: 'A generous slab of nut-studded chocolate for retail slicing.' },
-      { name: 'Pistachio Kunafa Chocolate Bar', size: '1 × 5kg', description: 'A generous slab of pistachio Kunafa chocolate for retail slicing.' },
-      { name: 'Kulfi Chocolate Bar', size: '1 × 5kg', description: 'A generous slab of kulfi-inspired chocolate for retail slicing.' },
-      { name: 'Pistachio Kunafa Milk Chocolate', size: '100g × 48 pieces', description: 'Individually wrapped milk chocolate pieces with Kunafa and pistachio.' },
-      { name: 'Pistachio Kunafa Dark Chocolate', size: '80g × 48 pieces', description: 'Individually wrapped dark chocolate pieces with Kunafa and pistachio.' },
-      { name: 'Chocolaty Dates with Almond', size: '1kg × 10 packs', description: 'Soft dates dipped in chocolate and topped with almond.' },
-      { name: 'Chocolaty Dates with Pista', size: '1kg × 10 packs', description: 'Soft dates dipped in chocolate and topped with pistachio.' },
-      { name: 'Chocolaty Dates with Lotus Biscuit', size: '1kg × 10 packs', description: 'Soft dates dipped in chocolate and topped with crushed Lotus biscuit.' },
-      { name: 'Chocolaty Dates with Orange Peel', size: '1kg × 10 packs', description: 'Soft dates dipped in chocolate and topped with candied orange peel.' },
-      { name: 'Chocolaty Dates with Coconut', size: '1kg × 10 packs', description: 'Soft dates dipped in chocolate and topped with shredded coconut.' },
-    ],
+      'Bika is part of the Ratan Impex international portfolio. Product range and details are being added.',
+    products: [],
+  },
+  {
+    slug: 'momelto',
+    name: 'Momelto',
+    logo: null,
+    tagline: 'International FMCG brand',
+    color: '#B5527A',
+    colorSoft: '#F8E4EC',
+    country: 'Imported',
+    overview:
+      'Momelto is part of the Ratan Impex international portfolio. Product range and details are being added.',
+    products: [],
   },
 ]
 
-const totalProducts = brands.reduce((sum, b) => sum + b.products.length, 0)
-
+// Company-supplied figures — deliberately rounded "N+" values, not counts derived from the catalogue below.
 export const stats = [
-  { label: 'Distributors', value: 400, suffix: '+' },
-  { label: 'States', value: 28, suffix: '' },
-  { label: 'Years in Industry', value: 20, suffix: '+' },
-  { label: 'Products', value: Math.floor(totalProducts / 10) * 10, suffix: '+' },
+  { label: 'Brands', value: 10, suffix: '+' },
+  { label: 'Products', value: 240, suffix: '+' },
+  { label: 'Distributors & Dealers', value: 85, suffix: '+' },
+  { label: 'Retail Touchpoints', value: 348, suffix: '+' },
+  { label: 'States & Territories', value: 29, suffix: '+' },
+  { label: 'Years of Experience', value: 17, suffix: '+' },
 ]
 
 export const faqs = [

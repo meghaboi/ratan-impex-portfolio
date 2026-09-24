@@ -2,29 +2,34 @@ import ScrollReveal from './ScrollReveal'
 
 const stages = [
   {
-    name: 'Source',
-    text: "Identifying the world's finest food and confectionery brands worth bringing home.",
-    tags: ['Trade Marketing', 'Sales Department'],
+    name: 'Suppliers',
+    text: 'Carefully selected international food and beverage brands, chosen for quality, consumer appeal and market potential. Vegetarian products only.',
+    tags: ['International Import'],
   },
   {
-    name: 'Import',
-    text: 'Every shipment cleared, documented and accounted for before it reaches Indian shores.',
-    tags: ['Finance', 'IT Department'],
+    name: 'Ratan Impex',
+    text: 'Imported, warehoused and managed end to end — from international supplier to the Indian market.',
+    tags: ['Supply Chain', 'Logistics & Warehousing'],
   },
   {
-    name: 'Warehouse',
-    text: 'Received, checked and held in trust until it is ready to move.',
-    tags: ['Supply Chain', 'Logistics & Warehouse'],
+    name: 'Distributors',
+    text: 'Distributors, super stockists and dealers connect each brand to sales channels across India.',
+    tags: ['Distribution', 'Sales'],
   },
   {
-    name: 'Distribute',
-    text: 'Out to 400+ distributors across 28 states, on schedule, every time.',
-    tags: ['Sales Department', 'Logistics & Warehouse'],
+    name: 'Retail',
+    text: 'Retailers, supermarkets, chain stores and modern trade — supported by launches, distribution tracking and business reviews.',
+    tags: ['Trade Marketing'],
   },
   {
-    name: 'Shelf',
-    text: 'From our warehouse to retail shelves and doorsteps nationwide.',
-    tags: ['Trade Marketing', 'E-Commerce'],
+    name: 'Online',
+    text: 'E-commerce and digital channels extend every brand beyond the shelf.',
+    tags: ['E-Commerce'],
+  },
+  {
+    name: 'Consumers',
+    text: 'International flavours in homes across India, backed by long-term brand partnerships.',
+    tags: ['Brand Development'],
   },
 ]
 
@@ -35,8 +40,12 @@ export default function Process() {
         <ScrollReveal>
           <span className="label-meta text-berry">04 — How It Moves</span>
           <h2 className="font-display text-balance mt-4 max-w-2xl text-heading font-extrabold text-ink">
-            From origin to your nearest shelf.
+            From international supplier to Indian consumer.
           </h2>
+          <p className="text-body-fluid mt-5 max-w-xl text-ink/60">
+            A growing pan-India distribution ecosystem connecting international brands with multiple channels across
+            the Indian market.
+          </p>
         </ScrollReveal>
 
         <div className="mt-16">

@@ -1,6 +1,6 @@
 import ScrollReveal from './ScrollReveal'
 import ImageReveal from './ImageReveal'
-import { company, mission, vision, values, departments } from '../data/content'
+import { company, mission, vision, values, capabilities } from '../data/content'
 
 const pillars = [
   { numeral: 'I', title: 'Our Mission', text: mission },
@@ -53,8 +53,12 @@ export default function About() {
 
         <ScrollReveal delay={0.1}>
           <p className="mt-14 max-w-3xl text-body-fluid text-ink/50">
-            <span className="label-meta text-ink/70">Departments — </span>
-            {departments.join(' / ')}
+            <span className="label-meta text-ink/70">Core Capabilities — </span>
+            {capabilities.join(' / ')}
+          </p>
+          <p className="mt-4 max-w-3xl text-body-fluid text-ink/50">
+            <span className="label-meta text-ink/70">Offices — </span>
+            {company.offices.join(' / ')}
           </p>
         </ScrollReveal>
       </div>

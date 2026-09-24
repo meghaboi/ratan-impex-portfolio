@@ -4,10 +4,11 @@ import { ArrowDown, ArrowUpRight, MessageCircle } from 'lucide-react'
 import { Globe } from './Globe'
 import RevealWords from './RevealWords'
 import MagneticLink from './MagneticLink'
-import { company, brands, stats, contact } from '../data/content'
+import { company, stats, contact } from '../data/content'
 import { globeMarkers, globeArcs } from '../data/geo'
 
 const productsStat = stats.find((s) => s.label === 'Products')!
+const brandsStat = stats.find((s) => s.label === 'Brands')!
 
 export default function Hero() {
   const sectionRef = useRef<HTMLElement>(null)
@@ -75,7 +76,7 @@ export default function Hero() {
               transition={{ duration: 0.8, delay: 0.7 }}
               className="font-editorial text-lead italic leading-snug text-cream/90"
             >
-              {company.positioning}
+              {company.tagline}
             </motion.p>
           </div>
         </motion.div>
@@ -100,13 +101,13 @@ export default function Hero() {
       {/* Bottom strip — full-bleed toolbar, deliberately outside the capped container */}
       <div className="absolute inset-x-0 bottom-0 flex flex-col gap-4 border-t border-cream/10 px-6 py-5 sm:flex-row sm:items-center sm:justify-between sm:px-10">
         <div className="label-meta flex flex-wrap gap-x-6 gap-y-1 text-cream/60">
-          <span>{brands.length} Brands</span>
+          <span>{brandsStat.value}{brandsStat.suffix} Brands</span>
           <span>{productsStat.value}{productsStat.suffix} Products</span>
           <span>Nationwide Delivery</span>
         </div>
 
         <div className="flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center sm:gap-x-6 sm:gap-y-2">
-          <MagneticLink className="w-full sm:w-auto">
+          <MagneticLink className="block w-full sm:inline-block sm:w-auto">
             <a
               href="#brands"
               className="group flex items-center justify-center gap-1.5 border border-cream/25 px-5 py-3 label-meta text-cream transition-colors hover:bg-cream hover:text-ink sm:justify-start sm:border-0 sm:px-0 sm:py-0 sm:hover:bg-transparent sm:hover:text-cream"
@@ -115,7 +116,7 @@ export default function Hero() {
               <ArrowUpRight size={14} className="transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
             </a>
           </MagneticLink>
-          <MagneticLink className="w-full sm:w-auto">
+          <MagneticLink className="block w-full sm:inline-block sm:w-auto">
             <a
               href={contact.whatsappCatalogue}
               target="_blank"

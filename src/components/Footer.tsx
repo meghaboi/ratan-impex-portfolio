@@ -36,7 +36,7 @@ export default function Footer() {
       <div className="mx-auto max-w-[1600px] px-6 py-16 md:px-10">
         <div className="grid gap-10 md:grid-cols-4">
           <div>
-            <span className="font-display text-lg font-bold text-cream">RATAN IMPEX</span>
+            <img src="/images/misc/logo.png" alt="Ratan Impex" className="h-14 w-auto brightness-0 invert" />
             <p className="mt-4 max-w-xs text-sm">{company.description}</p>
             <div className="mt-5 flex gap-3">
               <a

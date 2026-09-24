@@ -3,9 +3,10 @@ import { ArrowUpRight } from 'lucide-react'
 import ScrollReveal from './ScrollReveal'
 import Counter from './Counter'
 import DriftWall from './DriftWall'
-import { brands, stats, allProductPhotos } from '../data/content'
+import { stats, allProductPhotos } from '../data/content'
 
 const productsStat = stats.find((s) => s.label === 'Products')!
+const brandsStat = stats.find((s) => s.label === 'Brands')!
 
 export default function ProductPreview() {
   return (
@@ -16,7 +17,8 @@ export default function ProductPreview() {
             <span className="label-meta text-berry">03 — The Collection</span>
             <h2 className="font-editorial text-balance mt-4 text-heading italic leading-tight text-ink">
               {productsStat.value}
-              {productsStat.suffix} products, {brands.length} brands, one warehouse.
+              {productsStat.suffix} products from {brandsStat.value}
+              {brandsStat.suffix} international brands.
             </h2>
           </ScrollReveal>
 
@@ -25,7 +27,7 @@ export default function ProductPreview() {
               <div className="rule-t flex items-baseline justify-between gap-4 border-ink/10 py-6">
                 <span className="label-meta text-ink/50">Brands Imported</span>
                 <span className="font-display text-4xl font-bold text-berry sm:text-5xl">
-                  <Counter value={brands.length} />
+                  <Counter value={brandsStat.value} suffix={brandsStat.suffix} />
                 </span>
               </div>
             </ScrollReveal>
@@ -51,7 +53,7 @@ export default function ProductPreview() {
           </ScrollReveal>
         </div>
 
-        <div className="h-[70vh] md:h-[80vh]">
+        <div className="fade-edges h-[70vh] md:h-[80vh]">
           <DriftWall
             items={allProductPhotos}
             columns={4}

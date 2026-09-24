@@ -2,7 +2,7 @@ import ScrollReveal from './ScrollReveal'
 import Counter from './Counter'
 import { countries, stats } from '../data/content'
 
-const deliveryStats = stats.filter((s) => s.label !== 'Products')
+const deliveryStats = stats.filter((s) => s.label !== 'Products' && s.label !== 'Brands')
 
 export default function GlobalReach() {
   return (

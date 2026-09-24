@@ -3,7 +3,9 @@ import { motion } from 'framer-motion'
 import { ArrowLeft } from 'lucide-react'
 import BrandIndex from '../components/BrandIndex'
 import Contact from '../components/Contact'
-import { brands, countries } from '../data/content'
+import { stats, countries } from '../data/content'
+
+const brandsStat = stats.find((s) => s.label === 'Brands')!
 
 export default function BrandsPage() {
   return (
@@ -20,7 +22,7 @@ export default function BrandsPage() {
             transition={{ duration: 0.6 }}
             className="label-meta text-saffron"
           >
-            {brands.length} Brands · {countries.length} Countries
+            {brandsStat.value}{brandsStat.suffix} Brands · {countries.length} Countries
           </motion.span>
 
           <motion.h1

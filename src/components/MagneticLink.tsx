@@ -31,8 +31,8 @@ export default function MagneticLink({ children, className, strength = 10 }: Pro
       ref={ref}
       onPointerMove={handleMove}
       onPointerLeave={reset}
-      style={{ x, y, display: 'inline-block' }}
-      className={className}
+      style={{ x, y }}
+      className={`${className ?? 'inline-block'}`}
     >
       {children}
     </motion.span>
