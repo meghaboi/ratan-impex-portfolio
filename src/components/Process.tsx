@@ -23,7 +23,7 @@ const stages = [
   },
   {
     name: 'Online',
-    text: 'E-commerce and digital channels extend every brand beyond the shelf.',
+    text: 'A dedicated e-commerce team, since 2024, places every brand on Swiggy Instamart, Amazon, JioMart, BigBasket and more.',
     tags: ['E-Commerce'],
   },
   {

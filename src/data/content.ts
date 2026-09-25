@@ -4,7 +4,7 @@ export const company = {
   tagline: 'Global Brands. Built for India.',
   founded: 2009,
   headquarters: 'Hyderabad, Telangana',
-  offices: ['Hyderabad (HQ)', 'Bhiwandi', 'Bengaluru'],
+  offices: ['Hyderabad (HQ)', 'Bhiwandi', 'Ahmedabad', 'Bengaluru'],
   description:
     'Our role goes beyond importing products. We build markets, develop brands and create long-term partnerships.',
   intro:
@@ -317,18 +317,6 @@ export const brands: Brand[] = [
     products: [],
   },
   {
-    slug: 'bika',
-    name: 'Bika',
-    logo: null,
-    tagline: 'International FMCG brand',
-    color: '#2E6F8E',
-    colorSoft: '#E1F0F6',
-    country: 'Imported',
-    overview:
-      'Bika is part of the Ratan Impex international portfolio. Product range and details are being added.',
-    products: [],
-  },
-  {
     slug: 'momelto',
     name: 'Momelto',
     logo: null,
@@ -344,11 +332,11 @@ export const brands: Brand[] = [
 
 // Company-supplied figures — deliberately rounded "N+" values, not counts derived from the catalogue below.
 export const stats = [
-  { label: 'Brands', value: 10, suffix: '+' },
+  { label: 'Brands', value: 9, suffix: '+' },
   { label: 'Products', value: 240, suffix: '+' },
-  { label: 'Distributors & Dealers', value: 85, suffix: '+' },
-  { label: 'Retail Touchpoints', value: 348, suffix: '+' },
-  { label: 'States & Territories', value: 29, suffix: '+' },
+  { label: 'Distributors & Dealers', value: 100, suffix: '+' },
+  { label: 'Retail Touchpoints', value: 539, suffix: '+' },
+  { label: 'States & Territories', value: 28, suffix: '+' },
   { label: 'Years of Experience', value: 17, suffix: '+' },
 ]
 
