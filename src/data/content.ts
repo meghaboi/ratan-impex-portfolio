@@ -373,3 +373,48 @@ export const allProductPhotos = brands.flatMap((b) =>
     .filter((p) => p.image)
     .map((p) => ({ image: p.image as string, title: `${b.name} — ${p.name}` })),
 )
+
+export type Benefit = { title: string; text: string }
+
+export const benefits: Benefit[] = [
+  {
+    title: 'Range',
+    text: '9+ international brands spanning biscuits, confectionery, snacks and beverages — one supplier relationship for a full FMCG shelf.',
+  },
+  {
+    title: 'Reach',
+    text: '539+ retail touchpoints across 28+ states and territories, backed by 100+ distributors and dealers nationwide.',
+  },
+  {
+    title: 'Reliability',
+    text: '17+ years importing and distributing across India since 2009 — a track record retailers and brands can plan around.',
+  },
+  {
+    title: 'Quality',
+    text: 'Every product vetted for quality, consumer appeal and market potential before it reaches a shelf. Vegetarian products only.',
+  },
+  {
+    title: 'Trade Support',
+    text: 'Launches, distribution tracking and business reviews from our trade marketing team — not just a drop-off at the warehouse.',
+  },
+  {
+    title: 'Growth Channels',
+    text: 'A dedicated e-commerce team places every brand on Swiggy Instamart, Amazon, JioMart, BigBasket and more.',
+  },
+]
+
+// Gallery imagery beyond individual product shots — brand posters and lifestyle photography.
+export const galleryImages = [
+  ...allProductPhotos,
+  { image: '/images/gallery/julies-poster.jpg', title: "Julie's — Crackers & Biscuits" },
+  { image: '/images/gallery/coco-royal-poster.jpg', title: 'Coco Royal — Basil Seed & Coconut Milk' },
+  { image: '/images/gallery/coco-royal-pineapple-lifestyle.jpeg', title: 'Coco Royal — Pineapple' },
+  { image: '/images/gallery/coco-royal-strawberry-lifestyle.jpeg', title: 'Coco Royal — Strawberry' },
+  { image: '/images/gallery/milami-poster.jpg', title: 'Milami — Juicy Crush' },
+  { image: '/images/gallery/milami-lifestyle.jpg', title: 'Milami — Lifestyle' },
+  { image: '/images/gallery/chiko-poster.jpg', title: 'Chiko — Confections' },
+  { image: '/images/gallery/roshen-poster.jpg', title: 'Roshen — A Treat for Every Taste' },
+  { image: '/images/gallery/nabil-poster.jpg', title: 'Nabil — Digestive Biscuits' },
+  { image: '/images/gallery/captain-dolphin-poster.jpg', title: 'Captain Dolphin — Fun, Fruity Treats' },
+  { image: '/images/gallery/about-showcase.jpg', title: 'Ratan Impex — Brand Curation' },
+]

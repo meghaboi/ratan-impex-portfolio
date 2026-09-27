@@ -1,76 +1,53 @@
 import { Link } from 'react-router-dom'
 import { ArrowUpRight } from 'lucide-react'
 import ScrollReveal from './ScrollReveal'
-import Counter from './Counter'
-import DriftWall from './DriftWall'
-import { stats, allProductPhotos } from '../data/content'
+import ProductGrid, { type GridItem } from './ProductGrid'
+import { brands, stats, allProductPhotos } from '../data/content'
 
 const productsStat = stats.find((s) => s.label === 'Products')!
 const brandsStat = stats.find((s) => s.label === 'Brands')!
 
+const productImageOwner = new Map(
+  brands.flatMap((b) => b.products.filter((p) => p.image).map((p) => [p.image as string, b] as const)),
+)
+
+const featured: GridItem[] = allProductPhotos.slice(0, 8).map((p) => {
+  const brand = productImageOwner.get(p.image)
+  return {
+    key: p.image,
+    image: p.image,
+    title: p.title,
+    subtitle: brand?.country,
+    color: brand?.color,
+    to: brand ? `/brands/${brand.slug}` : undefined,
+  }
+})
+
 export default function ProductPreview() {
   return (
-    <section id="products" className="relative overflow-hidden bg-cream py-28 md:py-40">
-      <div className="mx-auto grid max-w-[1600px] gap-16 px-6 md:grid-cols-2 md:items-center md:gap-10 md:px-10">
-        <div>
-          <ScrollReveal>
-            <span className="label-meta text-berry">03 — The Collection</span>
-            <h2 className="font-editorial text-balance mt-4 text-heading italic leading-tight text-ink">
-              {productsStat.value}
-              {productsStat.suffix} products from {brandsStat.value}
-              {brandsStat.suffix} international brands.
-            </h2>
-          </ScrollReveal>
-
-          <div className="mt-14">
-            <ScrollReveal delay={0.05}>
-              <div className="rule-t flex items-baseline justify-between gap-4 border-ink/10 py-6">
-                <span className="label-meta text-ink/50">Brands Imported</span>
-                <span className="font-display text-4xl font-bold text-berry sm:text-5xl">
-                  <Counter value={brandsStat.value} suffix={brandsStat.suffix} />
-                </span>
-              </div>
-            </ScrollReveal>
-            <ScrollReveal delay={0.1}>
-              <div className="rule-t flex items-baseline justify-between gap-4 border-ink/10 py-6">
-                <span className="label-meta text-ink/50">Products Distributed</span>
-                <span className="font-display text-4xl font-bold text-berry sm:text-5xl">
-                  <Counter value={productsStat.value} suffix={productsStat.suffix} />
-                </span>
-              </div>
-            </ScrollReveal>
-            <div className="rule-t border-ink/10" />
-          </div>
-
-          <ScrollReveal delay={0.15}>
+    <section className="relative bg-cream py-24 md:py-32">
+      <div className="mx-auto max-w-[1600px] px-6 md:px-10">
+        <ScrollReveal>
+          <div className="flex flex-wrap items-end justify-between gap-6 pb-10">
+            <div>
+              <span className="label-meta text-berry">The Collection</span>
+              <h2 className="font-display text-balance mt-3 max-w-2xl text-heading font-extrabold text-ink">
+                {productsStat.value}
+                {productsStat.suffix} products from {brandsStat.value}
+                {brandsStat.suffix} international brands.
+              </h2>
+            </div>
             <Link
               to="/products"
-              className="group mt-10 inline-flex items-center gap-2 border border-ink/20 px-7 py-4 label-meta text-ink transition-colors hover:bg-ink hover:text-cream"
+              className="group inline-flex items-center gap-1.5 label-meta text-ink/70 hover:text-ink"
             >
               Explore All Products
-              <ArrowUpRight size={16} className="transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+              <ArrowUpRight size={14} className="transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
             </Link>
-          </ScrollReveal>
-        </div>
+          </div>
+        </ScrollReveal>
 
-        <div className="fade-edges h-[70vh] md:h-[80vh]">
-          <DriftWall
-            items={allProductPhotos}
-            columns={4}
-            tileWidth={200}
-            tileHeight={140}
-            gap={14}
-            speed={16}
-            tilt={12}
-            turn={-8}
-            depth={80}
-            dim={0.4}
-            fade={0.3}
-            lift={40}
-            parallax={0.7}
-            overlayColor="#1a1530"
-          />
-        </div>
+        <ProductGrid items={featured} columns={4} />
       </div>
     </section>
   )

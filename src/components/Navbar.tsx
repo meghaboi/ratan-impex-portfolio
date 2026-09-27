@@ -1,16 +1,17 @@
 import { useEffect, useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
-import { Link, useLocation, useNavigate } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 import { Menu, X, ArrowUpRight } from 'lucide-react'
 import MagneticLink from './MagneticLink'
 import { contact } from '../data/content'
 
 const links = [
-  { label: 'About', hash: '#about' },
-  { label: 'Brands', hash: '#brands' },
-  { label: 'Products', hash: '#products' },
-  { label: 'Process', hash: '#process' },
-  { label: 'Contact', hash: '#contact' },
+  { label: 'Home', to: '/' },
+  { label: 'About', to: '/about' },
+  { label: 'Brands', to: '/brands' },
+  { label: 'Products', to: '/products' },
+  { label: 'Gallery', to: '/gallery' },
+  { label: 'Contact', to: '/contact' },
 ]
 
 const EASE = [0.16, 1, 0.3, 1] as const
@@ -19,7 +20,6 @@ export default function Navbar() {
   const [scrolled, setScrolled] = useState(false)
   const [open, setOpen] = useState(false)
   const location = useLocation()
-  const navigate = useNavigate()
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 24)
@@ -35,14 +35,7 @@ export default function Navbar() {
     }
   }, [open])
 
-  const goTo = (hash: string) => {
-    setOpen(false)
-    if (location.pathname !== '/') {
-      navigate('/' + hash)
-    } else {
-      document.querySelector(hash)?.scrollIntoView({ behavior: 'smooth' })
-    }
-  }
+  const isActive = (to: string) => (to === '/' ? location.pathname === '/' : location.pathname.startsWith(to))
 
   const onDark = open || !scrolled
   const tone = onDark ? 'text-cream' : 'text-ink'
@@ -71,16 +64,19 @@ export default function Navbar() {
         </Link>
 
         <nav className="hidden items-center gap-9 md:flex">
-          {links.map((l) => (
-            <button
-              key={l.hash}
-              onClick={() => goTo(l.hash)}
-              className={`group relative label-meta pb-1 ${tone}`}
-            >
-              {l.label}
-              <span className="absolute bottom-0 left-0 h-px w-full origin-left scale-x-0 bg-current transition-transform duration-300 ease-out group-hover:scale-x-100" />
-            </button>
-          ))}
+          {links.map((l) => {
+            const active = isActive(l.to)
+            return (
+              <Link key={l.to} to={l.to} className={`group relative label-meta pb-1 ${tone}`}>
+                {l.label}
+                <span
+                  className={`absolute bottom-0 left-0 h-px w-full origin-left bg-current transition-transform duration-300 ease-out ${
+                    active ? 'scale-x-100' : 'scale-x-0 group-hover:scale-x-100'
+                  }`}
+                />
+              </Link>
+            )
+          })}
         </nav>
 
         <MagneticLink className="hidden md:inline-block" strength={8}>
@@ -117,16 +113,22 @@ export default function Navbar() {
           >
             <nav className="flex flex-col">
               {links.map((l, i) => (
-                <motion.button
-                  key={l.hash}
+                <motion.div
+                  key={l.to}
                   initial={{ opacity: 0, y: 16 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.5, delay: 0.08 + i * 0.06, ease: EASE }}
-                  onClick={() => goTo(l.hash)}
-                  className="font-editorial rule-b border-cream/15 py-4 text-left text-4xl italic"
                 >
-                  {l.label}
-                </motion.button>
+                  <Link
+                    to={l.to}
+                    onClick={() => setOpen(false)}
+                    className={`font-editorial rule-b block border-cream/15 py-4 text-left text-4xl italic ${
+                      isActive(l.to) ? 'text-saffron' : ''
+                    }`}
+                  >
+                    {l.label}
+                  </Link>
+                </motion.div>
               ))}
             </nav>
             <a

@@ -1,4 +1,5 @@
 import { useRef } from 'react'
+import { Link } from 'react-router-dom'
 import { motion, useScroll, useTransform } from 'framer-motion'
 import { ArrowDown, ArrowUpRight, MessageCircle } from 'lucide-react'
 import { Globe } from './Globe'
@@ -108,13 +109,13 @@ export default function Hero() {
 
         <div className="flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center sm:gap-x-6 sm:gap-y-2">
           <MagneticLink className="block w-full sm:inline-block sm:w-auto">
-            <a
-              href="#brands"
+            <Link
+              to="/brands"
               className="group flex items-center justify-center gap-1.5 border border-cream/25 px-5 py-3 label-meta text-cream transition-colors hover:bg-cream hover:text-ink sm:justify-start sm:border-0 sm:px-0 sm:py-0 sm:hover:bg-transparent sm:hover:text-cream"
             >
               Explore Our Brands
               <ArrowUpRight size={14} className="transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-            </a>
+            </Link>
           </MagneticLink>
           <MagneticLink className="block w-full sm:inline-block sm:w-auto">
             <a

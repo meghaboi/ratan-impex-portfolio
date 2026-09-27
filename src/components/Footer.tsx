@@ -61,11 +61,11 @@ export default function Footer() {
           <div>
             <h4 className="label-meta text-cream/40">Quick Links</h4>
             <ul className="mt-4 space-y-2 text-sm">
-              <li><a href="#about" className="hover:text-saffron">About Us</a></li>
-              <li><a href="#brands" className="hover:text-saffron">Brands</a></li>
-              <li><a href="#products" className="hover:text-saffron">Products</a></li>
-              <li><a href="#process" className="hover:text-saffron">Process</a></li>
-              <li><a href="#faq" className="hover:text-saffron">FAQ</a></li>
+              <li><Link to="/about" className="hover:text-saffron">About Us</Link></li>
+              <li><Link to="/brands" className="hover:text-saffron">Brands</Link></li>
+              <li><Link to="/products" className="hover:text-saffron">Products</Link></li>
+              <li><Link to="/gallery" className="hover:text-saffron">Gallery</Link></li>
+              <li><Link to="/contact" className="hover:text-saffron">Contact</Link></li>
             </ul>
           </div>
 

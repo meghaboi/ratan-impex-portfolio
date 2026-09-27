@@ -1,4 +1,6 @@
+import { useRef } from 'react'
 import ScrollReveal from './ScrollReveal'
+import { useStaggerReveal } from '../lib/scroll'
 
 const stages = [
   {
@@ -34,11 +36,14 @@ const stages = [
 ]
 
 export default function Process() {
+  const gridRef = useRef<HTMLDivElement>(null)
+  useStaggerReveal(gridRef, '[data-process-card]')
+
   return (
-    <section id="process" className="relative bg-cream py-28 md:py-40">
+    <section className="relative bg-cream-soft py-24 md:py-32">
       <div className="mx-auto max-w-[1600px] px-6 md:px-10">
         <ScrollReveal>
-          <span className="label-meta text-berry">04 — How It Moves</span>
+          <span className="label-meta text-berry">How It Moves</span>
           <h2 className="font-display text-balance mt-4 max-w-2xl text-heading font-extrabold text-ink">
             From international supplier to Indian consumer.
           </h2>
@@ -48,22 +53,17 @@ export default function Process() {
           </p>
         </ScrollReveal>
 
-        <div className="mt-16">
+        <div ref={gridRef} className="mt-14 grid gap-5 sm:grid-cols-2 lg:grid-cols-3 lg:gap-6">
           {stages.map((s, i) => (
-            <ScrollReveal key={s.name} delay={i * 0.05}>
-              <div className="rule-t grid gap-4 border-ink/10 py-10 md:grid-cols-[100px_1fr_1fr] md:items-start md:gap-10">
-                <span className="font-editorial text-3xl italic text-ink/30">{String(i + 1).padStart(2, '0')}</span>
-                <h3 className="font-display text-3xl font-extrabold uppercase tracking-tight text-ink sm:text-4xl">
-                  {s.name}
-                </h3>
-                <div>
-                  <p className="text-body-fluid max-w-md text-ink/70">{s.text}</p>
-                  <p className="label-meta mt-4 text-ink/40">{s.tags.join(' · ')}</p>
-                </div>
-              </div>
-            </ScrollReveal>
+            <div key={s.name} data-process-card className="card-shadow rounded-2xl border border-ink/5 bg-cream p-7">
+              <span className="font-editorial text-3xl italic text-ink/25">{String(i + 1).padStart(2, '0')}</span>
+              <h3 className="font-display mt-3 text-2xl font-extrabold uppercase tracking-tight text-ink">
+                {s.name}
+              </h3>
+              <p className="text-body-fluid mt-3 text-ink/65">{s.text}</p>
+              <p className="label-meta mt-4 text-ink/40">{s.tags.join(' · ')}</p>
+            </div>
           ))}
-          <div className="rule-t border-ink/10" />
         </div>
       </div>
     </section>

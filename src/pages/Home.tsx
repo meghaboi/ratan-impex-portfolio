@@ -1,11 +1,12 @@
 import Hero from '../components/Hero'
 import KineticStrip from '../components/KineticStrip'
 import BrandMarquee from '../components/BrandMarquee'
-import About from '../components/About'
-import BrandWall from '../components/BrandWall'
+import Benefits from '../components/Benefits'
 import ProductPreview from '../components/ProductPreview'
-import Process from '../components/Process'
+import StatsBanner from '../components/StatsBanner'
+import BrandWall from '../components/BrandWall'
 import GlobalReach from '../components/GlobalReach'
+import Process from '../components/Process'
 import FAQ from '../components/FAQ'
 import Contact from '../components/Contact'
 
@@ -15,13 +16,14 @@ export default function Home() {
       <Hero />
       <KineticStrip />
       <BrandMarquee />
-      <About />
-      <BrandWall />
+      <Benefits />
       <ProductPreview />
-      <Process />
+      <StatsBanner />
+      <BrandWall />
       <GlobalReach />
+      <Process />
       <FAQ />
-      <Contact />
+      <Contact variant="compact" />
     </>
   )
 }

@@ -4,7 +4,8 @@ import { motion } from 'framer-motion'
 import { ArrowLeft, MessageCircle } from 'lucide-react'
 import ScrollReveal from '../components/ScrollReveal'
 import Contact from '../components/Contact'
-import { ProductSpecimen, ProductRow } from '../components/ProductEntry'
+import ProductGrid, { type GridItem } from '../components/ProductGrid'
+import { ProductRow } from '../components/ProductEntry'
 import { brands, contact } from '../data/content'
 
 export default function BrandPage() {
@@ -19,6 +20,13 @@ export default function BrandPage() {
 
   const withPhoto = brand.products.filter((p) => p.image)
   const withoutPhoto = brand.products.filter((p) => !p.image)
+  const gridItems: GridItem[] = withPhoto.map((p) => ({
+    key: p.name,
+    image: p.image,
+    title: p.name,
+    subtitle: p.size,
+    color: brand.color,
+  }))
 
   return (
     <>
@@ -31,7 +39,7 @@ export default function BrandPage() {
         )}
 
         <div className="relative mx-auto w-full max-w-[1600px] px-6 pb-16 md:px-10">
-          <Link to="/#brands" className="label-meta mb-10 flex w-fit items-center gap-2 text-cream/60 hover:text-cream">
+          <Link to="/brands" className="label-meta mb-10 flex w-fit items-center gap-2 text-cream/60 hover:text-cream">
             <ArrowLeft size={14} /> Back to all brands
           </Link>
 
@@ -86,20 +94,11 @@ export default function BrandPage() {
             <p className="text-body-fluid mt-4 max-w-2xl text-ink/70">{brand.overview}</p>
           </ScrollReveal>
 
-          <div className="mt-6">
-            {withPhoto.map((p, i) => (
-              <ProductSpecimen
-                key={p.name}
-                product={p}
-                brandName={brand.name}
-                brandSlug={brand.slug}
-                brandColor={brand.color}
-                index={i}
-                total={withPhoto.length}
-                reverse={i % 2 === 1}
-              />
-            ))}
-          </div>
+          {gridItems.length > 0 && (
+            <div className="mt-10">
+              <ProductGrid items={gridItems} columns={4} />
+            </div>
+          )}
 
           {withoutPhoto.length > 0 && (
             <div className="mt-16">
