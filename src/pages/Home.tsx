@@ -1,5 +1,5 @@
 import Hero from '../components/Hero'
-import KineticStrip from '../components/KineticStrip'
+import ProductShowcase from '../components/ProductShowcase'
 import BrandMarquee from '../components/BrandMarquee'
 import Benefits from '../components/Benefits'
 import ProductPreview from '../components/ProductPreview'
@@ -14,7 +14,7 @@ export default function Home() {
   return (
     <>
       <Hero />
-      <KineticStrip />
+      <ProductShowcase />
       <BrandMarquee />
       <Benefits />
       <ProductPreview />

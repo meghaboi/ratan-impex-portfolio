@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { Fragment, useEffect, useRef } from 'react'
 import { Link, Navigate, useParams } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { ArrowLeft, MessageCircle } from 'lucide-react'
@@ -6,11 +6,14 @@ import ScrollReveal from '../components/ScrollReveal'
 import Contact from '../components/Contact'
 import ProductGrid, { type GridItem } from '../components/ProductGrid'
 import { ProductRow } from '../components/ProductEntry'
+import { useParallax } from '../lib/scroll'
 import { brands, contact } from '../data/content'
 
 export default function BrandPage() {
   const { slug } = useParams()
   const brand = brands.find((b) => b.slug === slug)
+  const posterRef = useRef<HTMLImageElement>(null)
+  useParallax(posterRef, 40)
 
   useEffect(() => {
     window.scrollTo(0, 0)
@@ -29,11 +32,14 @@ export default function BrandPage() {
   }))
 
   return (
-    <>
+    // Keyed on slug: without this, navigating brand-to-brand (same route element, new params)
+    // wouldn't remount the page, so the hero's mount animations and this scroll-scrubbed
+    // parallax tween would go stale after the first switch instead of restarting per brand.
+    <Fragment key={brand.slug}>
       <section className="relative flex min-h-[80vh] flex-col justify-end overflow-hidden bg-ink pt-28 text-cream">
         {brand.poster && (
           <div className="absolute inset-0">
-            <img src={brand.poster} alt="" className="h-full w-full object-cover opacity-30" />
+            <img ref={posterRef} src={brand.poster} alt="" className="h-full w-full scale-125 object-cover opacity-30" />
             <div className="absolute inset-0 bg-gradient-to-t from-ink via-ink/70 to-ink/20" />
           </div>
         )}
@@ -117,6 +123,6 @@ export default function BrandPage() {
       </section>
 
       <Contact />
-    </>
+    </Fragment>
   )
 }

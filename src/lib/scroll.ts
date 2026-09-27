@@ -78,6 +78,49 @@ export function useParallax(ref: RefObject<HTMLElement | null>, amount = 60, min
   }, [ref, amount, minWidth])
 }
 
+/**
+ * Slides `ref` in from an (x, y) offset to its resting position, scrubbed directly to scroll
+ * position (not a one-shot reveal) so the element keeps tracking the scrollbar the way a
+ * Revolution-Slider-style layer/parallax animation does. Gated to `minWidth`+ viewports — on
+ * mobile there's no room for elements to fly in from off-canvas, so it no-ops there.
+ */
+export function useSlideIn(
+  ref: RefObject<HTMLElement | null>,
+  { x = 0, y = 0, start = 'top 95%', end = 'top 55%', minWidth = 1024 }: { x?: number; y?: number; start?: string; end?: string; minWidth?: number } = {},
+) {
+  useEffect(() => {
+    const el = ref.current
+    if (!el || prefersReducedMotion()) return
+
+    const mm = gsap.matchMedia()
+    mm.add(`(min-width: ${minWidth}px)`, () => {
+      const tween = gsap.fromTo(
+        el,
+        { x, y, opacity: 0 },
+        {
+          x: 0,
+          y: 0,
+          opacity: 1,
+          ease: 'none',
+          scrollTrigger: {
+            trigger: el,
+            start,
+            end,
+            scrub: true,
+          },
+        },
+      )
+      return () => {
+        tween.scrollTrigger?.kill()
+        tween.kill()
+      }
+    })
+
+    return () => mm.revert()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [ref, x, y, start, end, minWidth])
+}
+
 /** Kills every live ScrollTrigger — call before a new route mounts its own triggers. */
 export function resetScrollTriggers() {
   ScrollTrigger.getAll().forEach((t) => t.kill())

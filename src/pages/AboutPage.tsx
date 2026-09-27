@@ -1,9 +1,11 @@
+import { useRef } from 'react'
 import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { ArrowLeft } from 'lucide-react'
 import ScrollReveal from '../components/ScrollReveal'
 import ImageReveal from '../components/ImageReveal'
 import Contact from '../components/Contact'
+import { useParallax } from '../lib/scroll'
 import { company, mission, vision, values, capabilities } from '../data/content'
 
 const pillars = [
@@ -13,6 +15,9 @@ const pillars = [
 ]
 
 export default function AboutPage() {
+  const imgRef = useRef<HTMLImageElement>(null)
+  useParallax(imgRef, 32)
+
   return (
     <>
       <section className="relative flex min-h-[60vh] flex-col justify-end overflow-hidden bg-ink pt-28 text-cream">
@@ -67,9 +72,10 @@ export default function AboutPage() {
           <div className="mt-16 md:mt-24">
             <ImageReveal className="ml-auto aspect-[16/9] w-full md:w-[70%]">
               <img
+                ref={imgRef}
                 src="/images/gallery/about-showcase.jpg"
                 alt="Ratan Impex international brand curation"
-                className="h-full w-full object-cover"
+                className="h-full w-full scale-125 object-cover"
               />
             </ImageReveal>
           </div>
