@@ -35,22 +35,25 @@ export default function ProductGrid({ items, className, columns = 3, onItemClick
 
   return (
     <div ref={containerRef} className={`grid grid-cols-2 gap-4 md:gap-6 ${COLS[columns]} ${className ?? ''}`}>
-      {items.map((item, i) => {
+      {items.map((item, index) => {
+        const isPackshot = item.image?.includes('/products/')
         const card = (
           <div
             data-grid-card
-            className="card-shadow group relative aspect-[4/3] w-full overflow-hidden rounded-2xl bg-ink/5"
+            className="group w-full overflow-hidden border border-ink/10 bg-white"
           >
             {item.image ? (
-              <img
-                src={item.image}
-                alt={item.title}
-                loading="lazy"
-                className="h-full w-full object-cover object-bottom transition-transform duration-700 ease-out group-hover:scale-110"
-              />
+              <div className="aspect-square overflow-hidden bg-[#f7f5ef]">
+                <img
+                  src={item.image}
+                  alt={item.title}
+                  loading="lazy"
+                  className={`h-full w-full transition-transform duration-500 ease-out group-hover:scale-105 ${isPackshot ? 'object-contain p-4 md:p-6' : 'object-cover'}`}
+                />
+              </div>
             ) : (
               <div
-                className="flex h-full w-full items-center justify-center p-6 text-center transition-transform duration-700 ease-out group-hover:scale-105"
+                className="flex aspect-square w-full items-center justify-center p-6 text-center transition-transform duration-500 ease-out group-hover:scale-105"
                 style={{ backgroundColor: item.color ?? '#1a1530' }}
               >
                 <span className="font-display text-2xl font-extrabold uppercase leading-tight text-cream">
@@ -58,21 +61,11 @@ export default function ProductGrid({ items, className, columns = 3, onItemClick
                 </span>
               </div>
             )}
-            {item.image && <div className="absolute inset-0 bg-gradient-to-t from-ink/85 via-ink/10 to-transparent" />}
-            {item.color && item.image && (
-              <span
-                className="absolute right-3 top-3 h-2.5 w-2.5 rounded-full ring-2 ring-cream/70"
-                style={{ backgroundColor: item.color }}
-              />
-            )}
-            {item.image && (
-              <div className="absolute inset-x-0 bottom-0 p-3 md:p-4">
-                {item.subtitle && <p className="label-meta text-cream/70">{item.subtitle}</p>}
-                <p className="font-display mt-0.5 text-sm font-bold leading-tight text-cream md:text-base">
-                  {item.title}
-                </p>
-              </div>
-            )}
+            <div className="min-h-[78px] border-t border-ink/10 p-3 md:min-h-[92px] md:p-4">
+              {item.subtitle && <p className="label-meta text-ink/45">{item.subtitle}</p>}
+              <p className="font-display mt-1 text-sm font-bold leading-tight text-ink md:text-base">{item.title}</p>
+              {item.color && <span className="mt-2 block h-0.5 w-7" style={{ backgroundColor: item.color }} />}
+            </div>
           </div>
         )
 
@@ -89,7 +82,7 @@ export default function ProductGrid({ items, className, columns = 3, onItemClick
             <button
               key={item.key}
               type="button"
-              onClick={() => onItemClick(item, i)}
+              onClick={() => onItemClick(item, index)}
               className="block w-full text-left"
             >
               {card}

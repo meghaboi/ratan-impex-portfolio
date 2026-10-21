@@ -37,7 +37,9 @@ export default function Navbar() {
 
   const isActive = (to: string) => (to === '/' ? location.pathname === '/' : location.pathname.startsWith(to))
 
-  const onDark = open || !scrolled
+  // Campaign artwork is bright and product-led, so the home-page navigation stays ink-coloured
+  // until the solid header arrives on scroll. Interior page mastheads remain light-on-dark.
+  const onDark = open || (!scrolled && location.pathname !== '/')
   const tone = onDark ? 'text-cream' : 'text-ink'
 
   return (
