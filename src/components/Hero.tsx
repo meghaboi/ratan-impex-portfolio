@@ -1,132 +1,104 @@
-import { useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
-import { motion, useScroll, useTransform } from 'framer-motion'
-import { ArrowDown, ArrowUpRight, MessageCircle } from 'lucide-react'
-import { Globe } from './Globe'
-import RevealWords from './RevealWords'
+import { AnimatePresence, motion, useReducedMotion } from 'framer-motion'
+import { ArrowLeft, ArrowRight, ArrowUpRight, MessageCircle } from 'lucide-react'
 import MagneticLink from './MagneticLink'
-import { company, stats, contact } from '../data/content'
-import { globeMarkers, globeArcs } from '../data/geo'
+import { brands, contact, stats } from '../data/content'
 
-const productsStat = stats.find((s) => s.label === 'Products')!
-const brandsStat = stats.find((s) => s.label === 'Brands')!
+const slides = brands.filter((brand) => brand.poster).slice(0, 5)
+const productsStat = stats.find((stat) => stat.label === 'Products')!
 
+/** Product-first landing banner: the catalogue is now the first thing a visitor discovers. */
 export default function Hero() {
-  const sectionRef = useRef<HTMLElement>(null)
-  const { scrollYProgress } = useScroll({ target: sectionRef, offset: ['start start', 'end start'] })
-  const textY = useTransform(scrollYProgress, [0, 1], ['0%', '-14%'])
-  const textOpacity = useTransform(scrollYProgress, [0, 0.85], [1, 0.15])
-  const globeScale = useTransform(scrollYProgress, [0, 1], [1, 1.08])
+  const [active, setActive] = useState(0)
+  const touchStartX = useRef<number | null>(null)
+  const reducedMotion = useReducedMotion()
+  const slide = slides[active]
+
+  const goTo = (index: number) => setActive((index + slides.length) % slides.length)
+
+  useEffect(() => {
+    if (reducedMotion) return
+    const timer = window.setInterval(() => goTo(active + 1), 6500)
+    return () => window.clearInterval(timer)
+  }, [active, reducedMotion])
 
   return (
-    <section ref={sectionRef} className="relative h-[100dvh] min-h-[720px] overflow-hidden bg-ink text-cream">
-      {/* Globe — India at the hub, arcs tracing each source country in. A sphere reads as
-          broken if it's clipped, so unlike the wall this used to be, it stays fully visible
-          rather than bleeding off the edge. */}
-      <motion.div
-        style={{ scale: globeScale }}
-        className="absolute right-[2%] top-1/2 w-[74vw] max-w-[560px] -translate-y-1/2 sm:w-[54vw] lg:right-[4%] lg:w-[40vw] xl:w-[34vw]"
-      >
-        <Globe
-          markers={globeMarkers}
-          arcs={globeArcs}
-          dark={1}
-          diffuse={1.3}
-          mapBrightness={4}
-          mapSamples={12000}
-          baseColor={[0.16, 0.13, 0.26]}
-          markerColor={[0.957, 0.702, 0.2]}
-          arcColor={[0.878, 0.557, 0.122]}
-          glowColor={[0.32, 0.26, 0.48]}
-          markerSize={0.05}
-          markerElevation={0.02}
-          arcWidth={1.2}
-          arcHeight={0.32}
-          speed={0.0035}
-          theta={0.3}
-        />
-      </motion.div>
+    <section
+      className="relative isolate min-h-[760px] touch-pan-y overflow-hidden bg-ink text-cream md:min-h-[820px]"
+      onTouchStart={(event) => { touchStartX.current = event.touches[0]?.clientX ?? null }}
+      onTouchEnd={(event) => {
+        const start = touchStartX.current
+        const end = event.changedTouches[0]?.clientX
+        touchStartX.current = null
+        if (start === null || end === undefined || Math.abs(start - end) < 48) return
+        goTo(start > end ? active + 1 : active - 1)
+      }}
+    >
+      <AnimatePresence mode="wait">
+        <motion.div
+          key={slide.slug}
+          initial={reducedMotion ? false : { opacity: 0, scale: 1.06 }}
+          animate={{ opacity: 1, scale: 1 }}
+          exit={reducedMotion ? undefined : { opacity: 0, scale: 1.025 }}
+          transition={{ duration: 0.85, ease: [0.22, 1, 0.36, 1] }}
+          className="absolute inset-0"
+        >
+          <img src={slide.poster} alt="" className="h-full w-full object-cover object-center" />
+          <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(20,16,38,.90)_0%,rgba(20,16,38,.56)_42%,rgba(20,16,38,.12)_78%)]" />
+          <div className="absolute inset-0 bg-[linear-gradient(0deg,rgba(20,16,38,.9)_0%,transparent_42%)]" />
+        </motion.div>
+      </AnimatePresence>
 
-      {/* Text stays inside the centered, capped container every other section uses — this is
-          what keeps IT anchored/gutter-respecting regardless of how wide the gallery bleeds. */}
-      <div className="relative mx-auto h-full max-w-[1600px] px-6 md:px-10">
-        <motion.div style={{ y: textY, opacity: textOpacity }}>
-          {/* Metadata line */}
-          <motion.div
-            initial={{ opacity: 0, y: 12 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 0.15 }}
-            className="absolute left-6 top-24 label-meta text-cream/60 md:left-10 md:top-28"
-          >
-            India — Global · Est. {company.founded}
-          </motion.div>
-
-          {/* Oversized wordmark, asymmetric */}
-          <div className="absolute left-6 top-36 md:left-10 md:top-40">
-            <h1 className="font-display text-mega font-extrabold uppercase leading-[0.86] tracking-tight">
-              <RevealWords text="Ratan" whileMount delay={0.25} as="div" />
-              <RevealWords text="Impex" whileMount delay={0.4} as="div" className="ml-[0.5em] text-saffron" />
-            </h1>
-          </div>
-
-          {/* Statement, offset lower-right */}
-          <div className="absolute bottom-60 left-6 max-w-md sm:bottom-40 md:bottom-44 md:left-[38%] md:max-w-lg">
-            <motion.p
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.7 }}
-              className="font-editorial text-lead italic leading-snug text-cream/90"
-            >
-              {company.tagline}
-            </motion.p>
+      <div className="relative mx-auto flex min-h-[760px] max-w-[1600px] flex-col px-6 pb-8 pt-32 md:min-h-[820px] md:px-10 md:pb-10 md:pt-40">
+        <motion.div
+          key={`${slide.slug}-copy`}
+          initial={reducedMotion ? false : { opacity: 0, y: 22 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.65, delay: reducedMotion ? 0 : 0.18, ease: [0.16, 1, 0.3, 1] }}
+          className="max-w-2xl"
+        >
+          <p className="label-meta mb-5 flex items-center gap-3 text-saffron">
+            <span className="h-px w-8 bg-saffron" />
+            Now featuring · {slide.country}
+          </p>
+          <h1 className="font-display text-balance text-display font-extrabold uppercase leading-[0.88] tracking-tight md:text-mega">
+            {slide.name}
+          </h1>
+          <p className="font-editorial mt-5 max-w-xl text-lead italic leading-snug text-cream/90">{slide.tagline}</p>
+          <p className="mt-5 max-w-lg text-sm leading-relaxed text-cream/70 sm:text-base">{slide.overview}</p>
+          <div className="mt-8 flex flex-wrap gap-3">
+            <Link to={`/brands/${slide.slug}`} className="group inline-flex items-center gap-2 bg-cream px-5 py-3.5 label-meta text-ink transition-colors hover:bg-saffron">
+              Explore {slide.name}
+              <ArrowUpRight size={15} className="transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+            </Link>
+            <Link to="/products" className="inline-flex items-center gap-2 border border-cream/35 px-5 py-3.5 label-meta text-cream transition-colors hover:border-cream hover:bg-cream/10">
+              View all products
+            </Link>
           </div>
         </motion.div>
+
+        <div className="mt-auto grid gap-6 pt-12 md:grid-cols-[1fr_auto] md:items-end">
+          <div className="flex items-center gap-2" aria-label="Featured brands">
+            {slides.map((brand, index) => (
+              <button key={brand.slug} type="button" onClick={() => goTo(index)} aria-label={`Show ${brand.name}`} aria-current={index === active} className="group flex min-h-11 items-center gap-2">
+                <span className={`h-1 w-7 transition-all duration-500 sm:w-11 ${index === active ? 'bg-saffron' : 'bg-cream/35 group-hover:bg-cream/70'}`} />
+                <span className={`hidden label-meta transition-colors sm:inline ${index === active ? 'text-cream' : 'text-cream/45'}`}>{brand.name}</span>
+              </button>
+            ))}
+          </div>
+          <div className="flex items-center gap-3">
+            <button onClick={() => goTo(active - 1)} className="grid h-11 w-11 place-items-center border border-cream/30 transition-colors hover:bg-cream hover:text-ink" aria-label="Previous banner"><ArrowLeft size={17} /></button>
+            <button onClick={() => goTo(active + 1)} className="grid h-11 w-11 place-items-center border border-cream/30 transition-colors hover:bg-cream hover:text-ink" aria-label="Next banner"><ArrowRight size={17} /></button>
+          </div>
+        </div>
       </div>
 
-      {/* Scroll cue */}
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 0.8, delay: 1 }}
-        className="absolute bottom-24 left-1/2 hidden -translate-x-1/2 flex-col items-center gap-2 text-cream/50 sm:flex"
-      >
-        <span className="label-meta">Scroll</span>
-        <motion.span
-          animate={{ y: [0, 6, 0] }}
-          transition={{ duration: 1.6, repeat: Infinity, ease: 'easeInOut' }}
-        >
-          <ArrowDown size={16} />
-        </motion.span>
-      </motion.div>
-
-      {/* Bottom strip — full-bleed toolbar, deliberately outside the capped container */}
-      <div className="absolute inset-x-0 bottom-0 flex flex-col gap-4 border-t border-cream/10 px-6 py-5 sm:flex-row sm:items-center sm:justify-between sm:px-10">
-        <div className="label-meta flex flex-wrap gap-x-6 gap-y-1 text-cream/60">
-          <span>{brandsStat.value}{brandsStat.suffix} Brands</span>
-          <span>{productsStat.value}{productsStat.suffix} Products</span>
-          <span>Nationwide Delivery</span>
-        </div>
-
-        <div className="flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center sm:gap-x-6 sm:gap-y-2">
-          <MagneticLink className="block w-full sm:inline-block sm:w-auto">
-            <Link
-              to="/brands"
-              className="group flex items-center justify-center gap-1.5 border border-cream/25 px-5 py-3 label-meta text-cream transition-colors hover:bg-cream hover:text-ink sm:justify-start sm:border-0 sm:px-0 sm:py-0 sm:hover:bg-transparent sm:hover:text-cream"
-            >
-              Explore Our Brands
-              <ArrowUpRight size={14} className="transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-            </Link>
-          </MagneticLink>
-          <MagneticLink className="block w-full sm:inline-block sm:w-auto">
-            <a
-              href={contact.whatsappCatalogue}
-              target="_blank"
-              rel="noreferrer"
-              className="group flex items-center justify-center gap-1.5 border border-cream/25 px-5 py-3 label-meta transition-colors hover:bg-cream hover:text-ink sm:justify-start sm:py-2.5"
-            >
-              <MessageCircle size={14} />
-              Get the Catalogue
-            </a>
+      <div className="relative border-t border-cream/15 bg-ink/60 backdrop-blur-sm">
+        <div className="mx-auto flex max-w-[1600px] flex-col gap-4 px-6 py-4 sm:flex-row sm:items-center sm:justify-between md:px-10">
+          <p className="label-meta text-cream/65">{productsStat.value}{productsStat.suffix} products · Global brands, built for India</p>
+          <MagneticLink className="w-fit" strength={6}>
+            <a href={contact.whatsappCatalogue} target="_blank" rel="noreferrer" className="inline-flex items-center gap-2 label-meta text-saffron hover:text-cream"><MessageCircle size={15} /> Get the catalogue</a>
           </MagneticLink>
         </div>
       </div>

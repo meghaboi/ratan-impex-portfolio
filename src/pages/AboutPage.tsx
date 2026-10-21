@@ -7,6 +7,8 @@ import ImageReveal from '../components/ImageReveal'
 import Contact from '../components/Contact'
 import { useParallax } from '../lib/scroll'
 import { company, mission, vision, values, capabilities } from '../data/content'
+import { Globe } from '../components/Globe'
+import { globeArcs, globeMarkers } from '../data/geo'
 
 const pillars = [
   { numeral: 'I', title: 'Our Mission', text: mission },
@@ -69,8 +71,15 @@ export default function AboutPage() {
             </ScrollReveal>
           </div>
 
-          <div className="mt-16 md:mt-24">
-            <ImageReveal className="ml-auto aspect-[16/9] w-full md:w-[70%]">
+          <div className="mt-16 grid gap-10 md:mt-24 md:grid-cols-[0.8fr_1.2fr] md:items-center">
+            <ScrollReveal className="order-2 md:order-1">
+              <div className="relative mx-auto aspect-square w-full max-w-[420px]">
+                <div className="absolute inset-0 rounded-full bg-saffron/15 blur-3xl" />
+                <Globe markers={globeMarkers} arcs={globeArcs} dark={0} diffuse={1.3} mapBrightness={3} mapSamples={9000} baseColor={[0.97, 0.87, 0.61]} markerColor={[0.76, 0.23, 0.29]} arcColor={[0.88, 0.56, 0.12]} glowColor={[0.98, 0.94, 0.83]} markerSize={0.045} markerElevation={0.02} arcWidth={1.1} arcHeight={0.3} speed={0.0025} theta={0.25} />
+              </div>
+              <p className="label-meta mt-4 text-center text-ink/50">Our global sourcing network</p>
+            </ScrollReveal>
+            <ImageReveal className="order-1 aspect-[16/10] w-full md:order-2" from="left">
               <img
                 ref={imgRef}
                 src="/images/gallery/about-showcase.jpg"

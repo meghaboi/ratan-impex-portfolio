@@ -14,10 +14,10 @@ export default function Home() {
   return (
     <>
       <Hero />
+      <ProductPreview />
       <ProductShowcase />
       <BrandMarquee />
       <Benefits />
-      <ProductPreview />
       <StatsBanner />
       <BrandWall />
       <GlobalReach />

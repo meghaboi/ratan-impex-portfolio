@@ -1,7 +1,7 @@
 import { useRef } from 'react'
 import ScrollReveal from './ScrollReveal'
 import { useSlideIn } from '../lib/scroll'
-import { company } from '../data/content'
+import { brands } from '../data/content'
 
 type Tile = {
   image: string
@@ -44,11 +44,11 @@ export default function ProductShowcase() {
 
       <div className="relative z-10 mx-auto max-w-2xl px-6 text-center md:px-10">
         <ScrollReveal>
-          <span className="label-meta text-saffron">The Portfolio</span>
+          <span className="label-meta text-saffron">The Product Shelf</span>
           <h2 className="font-editorial text-balance mt-4 text-heading italic leading-tight">
-            International shelves, brought home to India.
+            A world of flavours, made easy to discover.
           </h2>
-          <p className="text-body-fluid mt-5 text-cream/70">{company.tagline}</p>
+          <p className="text-body-fluid mt-5 text-cream/70">From everyday crackers to bright fruit drinks and shareable sweets, there is a product for every shelf and moment.</p>
         </ScrollReveal>
 
         {/* Below xl there's no room for off-canvas flanking tiles — same packshots, a plain strip. */}
@@ -57,6 +57,11 @@ export default function ProductShowcase() {
             <div key={t.image} className="h-28 w-28 shrink-0 snap-center overflow-hidden rounded-2xl bg-cream">
               <img src={t.image} alt={t.alt} className="h-full w-full object-cover" loading="lazy" />
             </div>
+          ))}
+        </div>
+        <div className="mt-7 flex flex-wrap justify-center gap-x-4 gap-y-2">
+          {brands.slice(0, 6).map((brand) => (
+            <span key={brand.slug} className="label-meta text-cream/45">{brand.name}</span>
           ))}
         </div>
       </div>
